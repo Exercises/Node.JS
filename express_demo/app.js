@@ -2,16 +2,43 @@ var express = require('express')
 var multer  = require('multer')
 var compression = require('compression')
 var app = express()
-
+var util = require('util')
+/*
 app.use(compression({filter:shouldCompress}), function(req, res){
     console.log(req.baseUrl);
     console.log("eehhfle")
     res.end()
 }) 
+*/
 
-app.get('/', function (req, res) {
-      res.send('Hello World!');
+app.get('/share', function(req, res) {
+    console.log('share');
+    var walk    = require('walk');
+    var files   = {}
+    // Walker options
+    var walker  = walk.walk('/home/juude/share', { followLinks: false  });
+    walker.on('file', function(root, stat, next) {
+     // Add this file to the list of files
+        files[root + '/' + stat.name]= stat.name;
+        next();
+    });
+
+    walker.on('end', function() {
+        console.log(files);
+	//files.forEach(function(value, key, map) {
+	//    //<a href='sfdsdfsfas'>file</a>
+	//    console.log("sfdd" + value + "  " + key);
+        //    res.writeln(util.format('<a href="%s">%s</a>', key, value));
+	//});
+	for(key in files) {
+	    console.log("ｋｅｙ" + key);
+	    res.write(util.format('<a href="/static/%s">%s</a><br/>\n', files[key], files[key]));
+	}
+	res.end();
+   });
 });
+
+app.use('/static', express.static('/home/juude/share'))
 
 app.get('/imageinfo', function(req, res) {
       res.send('ImageInfo is');
