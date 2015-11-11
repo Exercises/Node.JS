@@ -10,6 +10,8 @@ app.use(compression({filter:shouldCompress}), function(req, res){
     res.end()
 }) 
 */
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
 
 app.get('/share', function(req, res) {
     console.log('share');
@@ -38,6 +40,9 @@ app.get('/share', function(req, res) {
    });
 });
 
+app.get('/page', function(){
+    
+});
 app.use('/static', express.static('/home/juude/share'))
 
 app.get('/imageinfo', function(req, res) {
