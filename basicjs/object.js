@@ -7,6 +7,8 @@ world.prototype.draw = function() {
     console.log('I am drawing');
 }
 
+
 var w = new world();
-console.log('world color: ' + w.color);
+w.hehe = "hehe";
+console.log('world color: ' + w.colori + "hehe: " + w.hehe);
 w.draw();
